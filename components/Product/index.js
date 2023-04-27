@@ -2,9 +2,13 @@ import useSWR from "swr";
 import { useRouter } from "next/router";
 import { ProductCard } from "./Product.styled";
 import { StyledLink } from "../Link/Link.styled";
-import Comments from "../../../../backend-create/products/components/Comments";
+import Comments from "../Comments";
+import ProductForm from "../ProductForm";
+import { useState } from "react";
+import { StyledButton } from "../Button/Button.styled";
 
-export default function Product() {
+export default function Product({ onSubmit }) {
+  const [isEditMode, setIsEditMode] = useState(false);
   const router = useRouter();
   const { id } = router.query;
 
@@ -20,13 +24,27 @@ export default function Product() {
 
   return (
     <ProductCard>
-      <h2>{data.name}</h2>
-      <p>Description: {data.description}</p>
-      <p>
-        Price: {data.price} {data.currency}
-      </p>
-      {data.reviews.length > 0 && <Comments reviews={data.reviews} />}
-      <StyledLink href="/">Back to all</StyledLink>
+      {isEditMode ? (
+        <ProductForm onSubmit={onSubmit} heading={"Edit Product"} />
+      ) : (
+        <>
+          <h2>{data.name}</h2>
+          <p>Description: {data.description}</p>
+          <p>
+            Price: {data.price} {data.currency}
+          </p>
+          {data.reviews.length > 0 && <Comments reviews={data.reviews} />}
+          <StyledButton
+            type="button"
+            onClick={() => {
+              setIsEditMode(!isEditMode);
+            }}
+          >
+            edit fish
+          </StyledButton>
+          <StyledLink href="/">Back to all</StyledLink>
+        </>
+      )}
     </ProductCard>
   );
 }

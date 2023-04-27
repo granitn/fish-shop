@@ -1,37 +1,20 @@
 import { StyledForm, StyledHeading, StyledLabel } from "./ProductForm.styled";
 import { StyledButton } from "../Button/Button.styled";
-import useSWRMutation from "swr/mutation";
 
-async function sendRequest(url, { arg }) {
-  const response = await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(arg),
-  });
+export default function ProductForm({ onSubmit, heading }) {
+  // async function handleSubmit(event) {
+  //   event.preventDefault();
 
-  if (!response.ok) {
-    console.error(response.status);
-  }
-}
+  //   const formData = new FormData(event.target);
+  //   const productData = Object.fromEntries(formData);
 
-export default function ProductForm() {
-  const { trigger } = useSWRMutation("/api/products", sendRequest);
-
-  async function handleSubmit(event) {
-    event.preventDefault();
-
-    const formData = new FormData(event.target);
-    const productData = Object.fromEntries(formData);
-
-    await trigger(productData);
-    event.target.reset();
-  }
+  //   await trigger(productData);
+  //   event.target.reset();
+  // }
 
   return (
-    <StyledForm onSubmit={handleSubmit}>
-      <StyledHeading>Add a new Fish</StyledHeading>
+    <StyledForm onSubmit={onSubmit}>
+      <StyledHeading>{heading}</StyledHeading>
       <StyledLabel htmlFor="name">
         Name:
         <input type="text" id="name" name="name" />
