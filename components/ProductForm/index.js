@@ -1,7 +1,13 @@
 import { StyledForm, StyledHeading, StyledLabel } from "./ProductForm.styled";
 import { StyledButton } from "../Button/Button.styled";
 
-export default function ProductForm({ onSubmit, heading }) {
+export default function ProductForm({
+  onSubmit,
+  heading,
+  name,
+  description,
+  price,
+}) {
   // async function handleSubmit(event) {
   //   event.preventDefault();
 
@@ -17,15 +23,20 @@ export default function ProductForm({ onSubmit, heading }) {
       <StyledHeading>{heading}</StyledHeading>
       <StyledLabel htmlFor="name">
         Name:
-        <input type="text" id="name" name="name" />
+        <input type="text" id="name" name="name" value={name} />
       </StyledLabel>
       <StyledLabel htmlFor="description">
         Description:
-        <input type="text" id="description" name="description" />
+        <input
+          type="text"
+          id="description"
+          name="description"
+          value={description}
+        />
       </StyledLabel>
       <StyledLabel htmlFor="price">
         Price:
-        <input type="number" id="price" name="price" min="0" />
+        <input type="number" id="price" name="price" min="0" value={price} />
       </StyledLabel>
       <StyledLabel htmlFor="currency">
         Currency:
